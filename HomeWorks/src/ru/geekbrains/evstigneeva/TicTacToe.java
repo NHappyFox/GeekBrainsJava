@@ -42,24 +42,70 @@ public class TicTacToe {
     }
 
     public static boolean checkWin(char symb) {
+        if (checkWinRight(symb)) {
+            return true;
+        }
+        if (checkWinLeft(symb)) {
+            return true;
+        }
+        if (checkWinRow(symb)) {
+            return true;
+        }
+        return checkWinColumn(symb);
+    }
 
-        for (int i = 0; i < 3; i++) {
-
+    public static boolean checkWinRight(char symb) {
+        for (int i = 0; i < SIZE; i++) {
             if (map[i][i] != symb) {
                 return false;
             }
         }
         return true;
-        /*
-        if(map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) return true;
-        if(map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) return true;
-        if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) return true;
-        if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) return true;
-        if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) return true;
-        if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) return true;
-        if (map[0][0] == symb && map[1][1] == symb && map[2][2] == symb) return true;
-        if (map[2][0] == symb && map[1][1] == symb && map[0][2] == symb) return true;
-        return false;*/
+    }
+
+    public static boolean checkWinLeft(char symb) {
+        for (int i = 0; i < SIZE; i++) {
+            if (map[i][SIZE - i] != symb) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkWinRow(char symb) {
+        for (int i = 0; i < SIZE; i++) {
+            int kolSymb = 0;
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] != symb) {
+                    break;
+                }
+                if (map[i][j] == symb) {
+                    kolSymb = kolSymb + 1;
+                    if (kolSymb == SIZE) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkWinColumn(char symb) {
+        for (int i = 0; i < SIZE; i++) {
+            int kolSymb = 0;
+            for (int j = 0; j < SIZE; j++) {
+                if (map[j][i] != symb) {
+                    break;
+                }
+                if (map[j][i] == symb) {
+                    kolSymb = kolSymb + 1;
+                    if (kolSymb == SIZE) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean isMapFull() {
