@@ -5,7 +5,7 @@ public class Cat extends Animal {
     private static int totalCat = 0;
 
     public Cat() {
-        super(200, 0);
+        super(200, 0, 2);
         totalCat = totalCat + 1;
     }
 
