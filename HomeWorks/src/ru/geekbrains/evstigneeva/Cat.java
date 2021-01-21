@@ -1,16 +1,23 @@
 package ru.geekbrains.evstigneeva;
 
-public class Cat extends Animal {
+public class Cat {
+    private String name;
+    private boolean fullness = false;
+    private int appetite;
 
-    private static int totalCat = 0;
-
-    public Cat() {
-        super(200, 0, 2);
-        totalCat = totalCat + 1;
+    public Cat(String name, int appetite) {
+        this.name = name;
+        this.appetite = appetite;
     }
 
-    @Override
-    public int getTotalCount() {
-        return totalCat;
+    public void eat(Plate plate) {
+        if (appetite <= plate.getFood()) {
+            fullness = true;
+            plate.decreaseFood(appetite);
+        }
+    }
+
+    public void fullnessInfo() {
+        System.out.println("Name cat: " + name + ", fullness: " + fullness);
     }
 }
