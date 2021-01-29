@@ -25,7 +25,21 @@ public class Main {
 //        RunningTrack runningTrack = new RunningTrack();
 //        runningTrack.trackRun(5000);
 //        System.out.println();
+        Barrier barrier[] = new Barrier[2];
 
+        RunningTrack runningTrack = new RunningTrack(100);
+        Wall wall = new Wall(3);
+        barrier[0] = runningTrack;
+        barrier[1] = wall;
 
+        Human humans[] = new Human[2];
+        humans[0] = new Human(4, 99);
+        humans[1] = new Human(2, 101);
+
+        for (int i = 0; i < humans.length; i++) {
+            for (int j = 0; j < barrier.length; j++) {
+                humans[i].action(barrier[j]);
+            }
+        }
     }
 }
