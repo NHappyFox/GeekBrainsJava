@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            String[][] arrayTwoD = new String[4][4];
+            String[][] arrayTwoD = new String[3][4];
             arrayTwoD[0][0] = "6";
             arrayTwoD[0][1] = "54";
             arrayTwoD[0][2] = "8";
@@ -21,7 +21,7 @@ public class Main {
             arrayTwoD[2][1] = "44";
             arrayTwoD[2][2] = "51";
             arrayTwoD[2][3] = "69";
-            arrayTwoD[3][0] = "4";
+            arrayTwoD[3][0] = "h";
             arrayTwoD[3][1] = "58";
             arrayTwoD[3][2] = "14";
             arrayTwoD[3][3] = "67";
