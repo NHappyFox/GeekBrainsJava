@@ -41,5 +41,29 @@ public class Main {
                 humans[i].action(barrier[j]);
             }
         }
+
+        Cat cats[] = new Cat[3];
+        cats[0] = new Cat(1, 200);
+        cats[1] = new Cat(2, 99);
+        cats[2] = new Cat(4, 200);
+
+        for (int x = 0; x < cats.length; x++) {
+            for (int e = 0; e < barrier.length; e++) {
+                cats[x].action(barrier[e]);
+            }
+        }
+
+        Robot robots[] = new Robot[3];
+        robots[0] = new Robot(1, 200);
+        robots[1] = new Robot(0, 0);
+        robots[2] = new Robot(4, 99);
+
+        for (int y = 0; y < robots.length; y++) {
+            for (int u = 0; u < barrier.length; u++) {
+                robots[y].action(barrier[u]);
+            }
+        }
     }
+
+
 }
