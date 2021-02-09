@@ -1,6 +1,11 @@
 package ru.geekbrains.evstigneeva;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -12,13 +17,25 @@ public class Main {
             System.out.println(list[i]);
         }
         int search = search(22, list);
+
+        List<String> arrayList = new ArrayList();
+        arrayList.add("blink");
+        arrayList.add("arm");
+        arrayList.add("bad");
+        arrayList.add("beer");
+        arrayList.add("bliss");
+        arrayList.add("block");
+        arrayList.add("clear");
+        arrayList.add("again");
+
         System.out.println(search);
         System.out.println();
         String result = reverse("Всё реально");
         System.out.println(result);
         System.out.println();
         System.out.println(maximum(list));
-
+        System.out.println(average());
+        System.out.println(searchWords(arrayList));
 
     }
 
@@ -41,8 +58,36 @@ public class Main {
 
     public static Integer maximum(Integer[] list) {
 
+        Integer max = list[0];
 
-        return null;
 
+        for (int i = 0; i < list.length; i++) {
+            if (max < list[i]) {
+                max = list[i];
+            }
+        }
+        return max;
     }
+
+    public static Double average() {
+
+        List<Integer> testList = Arrays.asList(6, 7, 8, 9, 10);
+
+        double intAverage = testList.stream()
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(0.0);
+
+        return intAverage;
+    }
+
+    public static List<String> searchWords(List<String> arrayList) {
+        Predicate<String> lambda = (string) -> string.startsWith("a") && string.length() == 3;
+
+        return arrayList
+                .stream()
+                .filter(lambda)
+                .collect(Collectors.toList());
+    }
+
 }
