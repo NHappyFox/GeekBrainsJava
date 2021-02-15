@@ -21,8 +21,7 @@ public class MyClient {
         scanner = new Scanner(System.in);
         try {
             openConnection();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException ignored) {
         }
     }
 

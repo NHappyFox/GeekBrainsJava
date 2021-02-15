@@ -30,8 +30,7 @@ public class Main {
                             break;
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             });
             threadReader.start();
@@ -43,8 +42,10 @@ public class Main {
                 }
                 System.out.println("Клиент сказал: " + str);
             }
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
