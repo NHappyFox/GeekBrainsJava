@@ -10,7 +10,7 @@ public class ClientHandler {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
-
+    private static final long TIME_OUT_MILLS = 2 * 60 * 1000;
     private String name;
 
     public String getName() {
@@ -24,6 +24,18 @@ public class ClientHandler {
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
             this.name = "";
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(TIME_OUT_MILLS);
+                    if (name.length() == 0) {
+                        closeConnection();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
             new Thread(() -> {
                 try {
                     authentication();
