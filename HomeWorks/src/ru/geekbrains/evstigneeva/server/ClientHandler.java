@@ -4,13 +4,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Date;
 
 public class ClientHandler {
     private MyServer myServer;
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
-    private static final long TIME_OUT_MILLS = 2 * 60 * 1000;
+    private static final long LOGIN_TIME_OUT_MILLS = 2 * 60 * 1000;
+    private static final long LAST_MESSAGE_TIME_OUT_MILLS = 3 * 60 * 1000;
+    private Long lastMessageTime = 0l;
     private String name;
 
     public String getName() {
@@ -25,30 +28,59 @@ public class ClientHandler {
             this.out = new DataOutputStream(socket.getOutputStream());
             this.name = "";
 
-            new Thread(() -> {
+            startAuthWaiter();
+            startMainThread();
+            startDisconnectingInactiveUserProcess();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Проблемы при создании обработчика клиента");
+        }
+    }
+
+    private void startMainThread() {
+        new Thread(() -> {
+            try {
+                authentication();
+                lastMessageTime = new Date().getTime();
+                readMessages();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        }).start();
+    }
+
+    private void startAuthWaiter() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(LOGIN_TIME_OUT_MILLS);
+                if (name.length() == 0) {
+                    System.out.println("timeout exception logout unauthorized client");
+                    closeConnection();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void startDisconnectingInactiveUserProcess() {
+        new Thread(() -> {
+            while (true) {
                 try {
-                    Thread.sleep(TIME_OUT_MILLS);
-                    if (name.length() == 0) {
+                    Thread.sleep(10000);
+                    long timeDifference = new Date().getTime() - lastMessageTime;
+
+                    if (timeDifference >= LAST_MESSAGE_TIME_OUT_MILLS) {
                         closeConnection();
+                        return;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }).start();
-
-            new Thread(() -> {
-                try {
-                    authentication();
-                    readMessages();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    closeConnection();
-                }
-            }).start();
-        } catch (IOException e) {
-            throw new RuntimeException("Проблемы при создании обработчика клиента");
-        }
+            }
+        }).start();
     }
 
     public void authentication() throws IOException {
@@ -77,6 +109,7 @@ public class ClientHandler {
     public void readMessages() throws IOException {
         while (true) {
             String strFromClient = in.readUTF();
+            lastMessageTime = new Date().getTime();
             System.out.println("от " + name + ": " + strFromClient);
             if (strFromClient.equals("/end")) {
                 return;
