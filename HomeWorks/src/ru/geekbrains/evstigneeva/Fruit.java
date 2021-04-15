@@ -2,16 +2,13 @@ package ru.geekbrains.evstigneeva;
 
 public class Fruit {
 
-    public float weight;
-    public String name = " Fruit ";
+    float weight;
+    String name = " Fruit ";
 
-    Fruit(float weight) {
+    public Fruit(float weight) {
         this.weight = weight;
     }
 
-    public Fruit() {
-
-    }
 
     public float getWeight() {
         return weight;

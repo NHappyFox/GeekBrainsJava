@@ -6,9 +6,6 @@ import java.util.List;
 
 public class Box<T extends Fruit> {
 
-    Orange orange = new Orange();
-    Apple apple = new Apple();
-
     public List<T> getList() {
         return list;
     }
@@ -23,17 +20,17 @@ public class Box<T extends Fruit> {
         list = new ArrayList<T>();
     }
 
-    void add(T obj) {
+    public void add(T obj) {
         list.add(obj);
     }
 
-    void moveAt(Box<T> box) {
+    public void moveAt(Box<T> box) {
 
         box.getList().addAll(list);
         list.clear();
     }
 
-    void info() {
+    public void info() {
         if (list.isEmpty()) {
             System.out.println("Коробка пуста");
         } else {
@@ -42,7 +39,7 @@ public class Box<T extends Fruit> {
         }
     }
 
-    float getWeight() {
+    public float getWeight() {
         if (list.isEmpty()) {
             return 0;
         } else {
@@ -50,7 +47,7 @@ public class Box<T extends Fruit> {
         }
     }
 
-    boolean compare(Box<? extends Fruit> box) {
+    public boolean compare(Box<? extends Fruit> box) {
         return this.getWeight() == box.getWeight();
     }
 

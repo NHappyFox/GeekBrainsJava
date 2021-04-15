@@ -2,15 +2,12 @@ package ru.geekbrains.evstigneeva;
 
 public class Apple extends Fruit {
 
-    private float weight = 1.0f;
-    public String name = " Apple ";
-
-    Apple(float weight) {
+    public Apple(float weight) {
         super(weight);
     }
 
     public Apple() {
-        super();
+        super("Apple",1.0f);
     }
 
     @Override
